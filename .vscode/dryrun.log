@@ -1,8 +1,6 @@
 make --dry-run --keep-going --print-directory
-make: Entering directory '/home/issam/Desktop/push'
-cc    -c -o main_programe.o main_programe.c
-cc    -c -o philo_utils.o philo_utils.c
-cc    -c -o philo_functions.o philo_functions.c
-cc -Wall -Wextra -Werror -pthread main_programe.o philo_utils.o philo_functions.o -o philo -g
-make: Leaving directory '/home/issam/Desktop/push'
+make: Entering directory `/Users/ielmakhf/Desktop/Philosopher'
+make: Nothing to be done for `all'.
+ 
+make: Leaving directory `/Users/ielmakhf/Desktop/Philosopher'
  

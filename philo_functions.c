@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: issam <issam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 08:42:52 by issam             #+#    #+#             */
-/*   Updated: 2022/08/07 09:34:42 by issam            ###   ########.fr       */
+/*   Updated: 2022/08/07 17:40:19 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ unsigned long long int	ft_atoi(char *s)
 	return (num * sign);
 }
 
-t_list	*ft_lstnew(int argc, char **argv)
+t_philo	*ft_lstnew(int argc, char **argv, pthread_mutex_t *mutex_print, int *check)
 {
-	t_list	*philo;
+	t_philo	*philo;
 
-	philo = malloc(sizeof(t_list));
+	philo = malloc(sizeof(t_philo));
 	if (philo == NULL)
 		return (NULL);
 	philo->time_to_die = ft_atoi(argv[2]);
@@ -64,13 +64,15 @@ t_list	*ft_lstnew(int argc, char **argv)
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	philo->meals_count = 0;
 	philo->number_of_meals = 0;
+	philo->print = mutex_print;
+	philo->check = check;
 	philo->next = NULL;
 	if (argc == 6)
 		philo->number_of_meals = ft_atoi(argv[5]);
 	return (philo);
 }
 
-t_list	*ft_lstlast(t_list *lst)
+t_philo	*ft_lstlast(t_philo *lst)
 {
 	if (!lst)
 		return (NULL);

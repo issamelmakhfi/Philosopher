@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: issam <issam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 08:31:47 by issam             #+#    #+#             */
-/*   Updated: 2022/08/07 09:38:01 by issam            ###   ########.fr       */
+/*   Updated: 2022/08/07 17:39:38 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int check_args(int ac, char **av)
 {
     int i;
 
-    i = 0;
+    i = 1;
     if (ac > 6)
         return (1);
     if (ac < 5)
@@ -43,25 +43,31 @@ int check_args(int ac, char **av)
     return (0);
 }
 
-t_list	*create_philos(int ac, char **av)
+t_philo	*create_philos(int ac, char **av)
 {
 	int		number_of_philos;
 	int		i;
-	t_list	*head;
-	t_list	*tmp;
+	t_philo	*head;
+	t_philo	*tmp;
+	pthread_mutex_t *mutex_print;
+	int				*check;
 
+	check = (int *)malloc(sizeof(int));
+	mutex_print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	*check = 0;
+	pthread_mutex_init(mutex_print, NULL);
 	number_of_philos = ft_atoi(av[1]);
 	i = 0;
 	while (i < number_of_philos)
 	{
 		if (i == 0)
 		{
-			head = ft_lstnew(ac, av);
+			head = ft_lstnew(ac, av, mutex_print, check);
 			tmp = head;
 		}
 		else
 		{
-			head->next = ft_lstnew(ac, av);
+			head->next = ft_lstnew(ac, av, mutex_print, check);
 			head = head->next;
 		}
 		head->id = i + 1;
@@ -78,5 +84,21 @@ void	ft_usleep(unsigned long long int time)
 	while ((the_time() - start) < time)
 	{
 		usleep(100);
+	}
+}
+
+void	lstfree(t_philo *philo, int	philo_size)
+{
+	int		i;
+	t_philo *philo_next;
+	t_philo *tmp;
+
+	tmp = philo;
+	i = -1;
+	while (++i < philo_size)
+	{
+		philo_next = tmp->next;
+		free(tmp);
+		tmp = philo_next;
 	}
 }

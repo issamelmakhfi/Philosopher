@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: issam <issam@student.42.fr>                +#+  +:+       +#+         #
+#    By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/07 08:21:12 by issam             #+#    #+#              #
-#    Updated: 2022/08/07 09:42:36 by issam            ###   ########.fr        #
+#    Updated: 2022/08/07 16:10:18 by ielmakhf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRC = main_programe.c philo_utils.c philo_functions.c
+SRC = main_programe.c philo_utils.c philo_functions.c philo_utils2.c
 
 OBJ = $(SRC:.c=.o)
 
