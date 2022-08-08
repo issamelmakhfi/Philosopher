@@ -17,10 +17,12 @@ void	*simulation(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	// if (*(philo->check) == 1)
+	// 	printf("teeeeeeeeeeeeeeeest\n");
+	if (philo->id % 2)
+		usleep(100);
 	while (*(philo->check) == 0)
 	{
-		if (philo->id % 2 == 0)
-			usleep(100);
 		pthread_mutex_lock(&philo->fork);
 		print_status(1, "has teken a fork", philo);
 		pthread_mutex_lock(&philo->next->fork);
@@ -66,8 +68,8 @@ void	check_kill(t_philo *philo, int philo_size, t_philo *philo_head)
 	{
 		if ((get_time() - philo->last_meal) >= philo->time_to_die)
 		{
-			print_status(0, "is died", philo);
 			*(philo->check) = 1;
+			print_status(0, "is died", philo);
 			break ;
 		}
 		if ((philo->number_of_meals > 0) && check_eat(philo_head, philo_size))

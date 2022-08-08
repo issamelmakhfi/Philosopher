@@ -45,10 +45,10 @@ int	check_args(int ac, char **av)
 
 t_philo	*create_philos(int ac, char **av)
 {
-	// int				number_of_philos;
-	// int				i;
+	int				number_of_philos;
+	int				i;
 	t_philo			*head;
-	// ?t_philo			*tmp;
+	t_philo			*tmp;
 	pthread_mutex_t	*mutex_print;
 	int				*check;
 
@@ -56,24 +56,24 @@ t_philo	*create_philos(int ac, char **av)
 	mutex_print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	*check = 0;
 	pthread_mutex_init(mutex_print, NULL);
-	// number_of_philos = ft_atoi(av[1]);
-	head = ft_creat(ac, av, mutex_print, check);
-	// i = -1;
-	// while (++i < number_of_philos)
-	// {
-	// 	if (i == 0)
-	// 	{
-	// 		head = ft_philo_new(ac, av, mutex_print, check);
-	// 		tmp = head;
-	// 	}
-	// 	else
-	// 	{
-	// 		head->next = ft_philo_new(ac, av, mutex_print, check);
-	// 		head = head->next;
-	// 	}
-	// 	head->id = i + 2;
-	// }
-	return (head);
+	number_of_philos = ft_atoi(av[1]);
+	// tmp = ft_creat(head, mutex_print, check);
+	i = -1;
+	while (++i < number_of_philos)
+	{
+		if (i == 0)
+		{
+			head = ft_philo_new(ac, av, mutex_print, check);
+			tmp = head;
+		}
+		else
+		{
+			head->next = ft_philo_new(ac, av, mutex_print, check);
+			head = head->next;
+		}
+		head->id = i + 1;
+	}
+	return (tmp);
 }
 
 void	ft_usleep(unsigned long long int time)

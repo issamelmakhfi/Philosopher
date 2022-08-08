@@ -23,9 +23,7 @@ typedef struct s_list
 {
 	pthread_t				thread;
 	pthread_mutex_t			fork;
-	pthread_mutex_t			*print;
 	int						id;
-	int						*check;
 	unsigned long long int	time_to_die;
 	unsigned long long int	time_to_eat;
 	unsigned long long int	time_to_sleep;
@@ -34,6 +32,12 @@ typedef struct s_list
 	unsigned long long int	meals;
 	struct s_list			*next;
 }				t_philo;
+
+typedef struct	s_ifos
+{
+	pthread_mutex_t			print;
+	int						check;
+}
 
 void					*simulation(void *arg);
 unsigned long long int	ft_atoi(char *str);
