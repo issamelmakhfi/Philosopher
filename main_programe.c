@@ -12,8 +12,7 @@
 
 #include "philosopher.h"
 
-
-void	*routine(void *arg)
+void	*simulation(void *arg)
 {
 	t_philo	*philo;
 
@@ -26,14 +25,14 @@ void	*routine(void *arg)
 		print_status(1, "has teken a fork", philo);
 		pthread_mutex_lock(&philo->next->fork);
 		print_status(1, "has teken a fork", philo);
-		philo->last_meal = the_time();
+		philo->last_meal = get_time();
 		print_status(1, "is eating", philo);
 		ft_usleep(philo->time_to_eat);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
 		if (philo->number_of_meals)
-			philo->meals_count++;
-		if (philo->number_of_meals && philo->number_of_meals <= philo->meals_count)
+			philo->meals++;
+		if (check_meals(philo))
 			break ;
 		print_status(1, "is sleeping", philo);
 		ft_usleep(philo->time_to_sleep);
@@ -51,7 +50,7 @@ int	check_eat(t_philo *philo, int philo_size)
 	j = 0;
 	while (i < philo_size)
 	{
-		if (philo->meals_count >= philo->number_of_meals)
+		if (philo->meals >= philo->number_of_meals)
 			j++;
 		philo = philo->next;
 		i++;
@@ -65,28 +64,26 @@ void	check_kill(t_philo *philo, int philo_size, t_philo *philo_head)
 {
 	while (1)
 	{
-		if ((the_time() - philo->last_meal) >= philo->time_to_die)
+		if ((get_time() - philo->last_meal) >= philo->time_to_die)
 		{
 			print_status(0, "is died", philo);
 			*(philo->check) = 1;
 			break ;
 		}
 		if ((philo->number_of_meals > 0) && check_eat(philo_head, philo_size))
-		{
 			break ;
-		}
 		philo = philo->next;
-		usleep(100);
 	}
 }
 
 int	main(int ac, char **av)
 {
 	t_philo	*philo;
-	t_philo 	*philo_head;
+	t_philo	*philo_head;
 	int		philo_size;
-	int 	i = -1;
-	
+	int		i;
+
+	i = -1;
 	if (check_args(ac, av))
 	{
 		ft_error ();
@@ -94,19 +91,16 @@ int	main(int ac, char **av)
 	}
 	philo = create_philos(ac, av);
 	philo_size = ft_atoi(av[1]);
-	ft_lstlast(philo)->next = philo;
+	ft_philo_last(philo)->next = philo;
 	philo_head = philo;
 	while (++i < philo_size)
 	{
 		pthread_mutex_init(&philo->fork, NULL);
 		philo->last_meal = 0;
-		pthread_create(&philo->thread, NULL, &routine, philo);
+		pthread_create(&philo->thread, NULL, &simulation, philo);
 		pthread_detach(philo->thread);
 		philo = philo->next;
 	}
 	check_kill(philo, philo_size, philo_head);
-	free(philo_head->print);
-	free(philo->check);
-	lstfree(philo_head, philo_size);
-	return (0);
+	return (philo_free(philo_head, philo_size, philo_head), 0);
 }

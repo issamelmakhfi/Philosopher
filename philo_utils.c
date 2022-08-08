@@ -12,7 +12,7 @@
 
 #include "philosopher.h"
 
-unsigned long long int	the_time(void)
+unsigned long long int	get_time(void)
 {
 	struct timeval					time;
 	unsigned long long int			time_spent;
@@ -25,76 +25,78 @@ unsigned long long int	the_time(void)
 	return (time_spent - start);
 }
 
-int check_args(int ac, char **av)
+int	check_args(int ac, char **av)
 {
-    int i;
+	int	i;
 
-    i = 1;
-    if (ac > 6)
-        return (1);
-    if (ac < 5)
-        return (2);
-    while (i < ac)
-    {
-        if (ft_atoi(av[i]) <= 0)
-            return (3);
-        i++;
-    }
-    return (0);
+	i = 1;
+	if (ac > 6)
+		return (1);
+	if (ac < 5)
+		return (2);
+	while (i < ac)
+	{
+		if (ft_atoi(av[i]) <= 0)
+			return (3);
+		i++;
+	}
+	return (0);
 }
 
 t_philo	*create_philos(int ac, char **av)
 {
-	int		number_of_philos;
-	int		i;
-	t_philo	*head;
-	t_philo	*tmp;
-	pthread_mutex_t *mutex_print;
+	// int				number_of_philos;
+	// int				i;
+	t_philo			*head;
+	// ?t_philo			*tmp;
+	pthread_mutex_t	*mutex_print;
 	int				*check;
 
 	check = (int *)malloc(sizeof(int));
 	mutex_print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	*check = 0;
 	pthread_mutex_init(mutex_print, NULL);
-	number_of_philos = ft_atoi(av[1]);
-	i = 0;
-	while (i < number_of_philos)
-	{
-		if (i == 0)
-		{
-			head = ft_lstnew(ac, av, mutex_print, check);
-			tmp = head;
-		}
-		else
-		{
-			head->next = ft_lstnew(ac, av, mutex_print, check);
-			head = head->next;
-		}
-		head->id = i + 1;
-		i++;
-	}
-	return (tmp);
+	// number_of_philos = ft_atoi(av[1]);
+	head = ft_creat(ac, av, mutex_print, check);
+	// i = -1;
+	// while (++i < number_of_philos)
+	// {
+	// 	if (i == 0)
+	// 	{
+	// 		head = ft_philo_new(ac, av, mutex_print, check);
+	// 		tmp = head;
+	// 	}
+	// 	else
+	// 	{
+	// 		head->next = ft_philo_new(ac, av, mutex_print, check);
+	// 		head = head->next;
+	// 	}
+	// 	head->id = i + 2;
+	// }
+	return (head);
 }
 
 void	ft_usleep(unsigned long long int time)
 {
-	unsigned long long int start;
+	unsigned long long int	start;
 
-	start = the_time();
-	while ((the_time() - start) < time)
+	start = get_time();
+	while ((get_time() - start) < time)
 	{
 		usleep(100);
 	}
 }
 
-void	lstfree(t_philo *philo, int	philo_size)
+void	philo_free(t_philo *philo, int philo_size, t_philo *philo_head)
 {
 	int		i;
-	t_philo *philo_next;
-	t_philo *tmp;
+	t_philo	*philo_next;
+	t_philo	*tmp;
 
 	tmp = philo;
 	i = -1;
+	free(philo_head->print);
+	free(philo->check);
 	while (++i < philo_size)
 	{
 		philo_next = tmp->next;

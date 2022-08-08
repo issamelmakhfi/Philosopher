@@ -12,12 +12,11 @@
 
 #include "philosopher.h"
 
-int ft_error(void)
+int	ft_error(void)
 {
-    write(2, "ERROR\n", 6);
-    return (0);
+	write(2, "ERROR\n", 6);
+	return (0);
 }
-
 
 int	spaces(const char *str)
 {
@@ -35,15 +34,15 @@ int	spaces(const char *str)
 
 unsigned long long int	ft_atoi(char *s)
 {
-	int		                    i;
-	int		                    sign;
+	int							i;
+	int							sign;
 	unsigned long long int		num;
 
 	i = spaces(s);
 	sign = 1;
 	num = 0;
 	if (s[i] == '+')
-        i++;
+		i++;
 	while (s[i] >= 48 && s[i] <= 57)
 	{
 		num = num * 10 + (s[i] - 48);
@@ -52,31 +51,32 @@ unsigned long long int	ft_atoi(char *s)
 	return (num * sign);
 }
 
-t_philo	*ft_lstnew(int argc, char **argv, pthread_mutex_t *mutex_print, int *check)
+t_philo	*ft_philo_new(int ac, char **av, \
+		pthread_mutex_t *mutex_print, int *check)
 {
 	t_philo	*philo;
 
 	philo = malloc(sizeof(t_philo));
 	if (philo == NULL)
 		return (NULL);
-	philo->time_to_die = ft_atoi(argv[2]);
-	philo->time_to_eat = ft_atoi(argv[3]);
-	philo->time_to_sleep = ft_atoi(argv[4]);
-	philo->meals_count = 0;
+	philo->time_to_die = ft_atoi(av[2]);
+	philo->time_to_eat = ft_atoi(av[3]);
+	philo->time_to_sleep = ft_atoi(av[4]);
+	philo->meals = 0;
 	philo->number_of_meals = 0;
 	philo->print = mutex_print;
 	philo->check = check;
 	philo->next = NULL;
-	if (argc == 6)
-		philo->number_of_meals = ft_atoi(argv[5]);
+	if (ac == 6)
+		philo->number_of_meals = ft_atoi(av[5]);
 	return (philo);
 }
 
-t_philo	*ft_lstlast(t_philo *lst)
+t_philo	*ft_philo_last(t_philo *philo)
 {
-	if (!lst)
+	if (!philo)
 		return (NULL);
-	while (lst->next)
-			lst = lst->next;
-	return (lst);
+	while (philo->next)
+			philo = philo->next;
+	return (philo);
 }

@@ -21,31 +21,36 @@
 
 typedef struct s_list
 {
-    pthread_t			thread;
-	pthread_mutex_t		fork;
-	pthread_mutex_t		*print;
-	int					id;
-	int					*check;
+	pthread_t				thread;
+	pthread_mutex_t			fork;
+	pthread_mutex_t			*print;
+	int						id;
+	int						*check;
 	unsigned long long int	time_to_die;
 	unsigned long long int	time_to_eat;
 	unsigned long long int	time_to_sleep;
 	unsigned long long int	last_meal;
 	unsigned long long int	number_of_meals;
-	unsigned long long int	meals_count;
+	unsigned long long int	meals;
 	struct s_list			*next;
 }				t_philo;
 
+void					*simulation(void *arg);
 unsigned long long int	ft_atoi(char *str);
-int check_args(int ac, char **av);
-int	spaces(const char *str);
-int ft_error(void);
-t_philo	*create_philos(int ac, char **av);
-t_philo	*ft_lstnew(int argc, char **argv, pthread_mutex_t *mutex_print, int *check);
-t_philo	*ft_lstlast(t_philo *lst);
-unsigned long long int	the_time(void);
-void	ft_usleep(unsigned long long int time);
-int	check_eat(t_philo *philo, int philo_size);
-void	lstfree(t_philo *philo, int	philo_size);
-void    print_status(int call, char *mssg, t_philo *philo);
+int						check_args(int ac, char **av);
+int						spaces(const char *str);
+int						ft_error(void);
+t_philo					*create_philos(int ac, char **av);
+t_philo					*ft_philo_new(int ac, char **av, \
+						pthread_mutex_t *mutex_print, int *check);
+t_philo					*ft_philo_last(t_philo *philo);
+unsigned long long int	get_time(void);
+void					ft_usleep(unsigned long long int time);
+int						check_eat(t_philo *philo, int philo_size);
+void					philo_free(t_philo *philo, int philo_size, \
+						t_philo *philo_head);
+void					print_status(int call, char *mssg, t_philo *philo);
+int						check_meals(t_philo *philo);
+t_philo					*ft_creat(int ac, char **av, pthread_mutex_t *mutex_print, int *check);
 
 #endif
