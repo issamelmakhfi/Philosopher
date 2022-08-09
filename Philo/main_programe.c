@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ielmakhf <ielmakhf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/07 08:21:31 by issam             #+#    #+#             */
-/*   Updated: 2022/08/07 17:42:11 by ielmakhf         ###   ########.fr       */
+/*   Created: 2022/08/09 18:57:36 by ielmakhf          #+#    #+#             */
+/*   Updated: 2022/08/09 18:57:40 by ielmakhf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ void	*simulation(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	// if (*(philo->check) == 1)
-	// 	printf("teeeeeeeeeeeeeeeest\n");
 	if (philo->id % 2)
 		usleep(100);
-	while (*(philo->check) == 0)
+	while (1)
 	{
 		pthread_mutex_lock(&philo->fork);
 		print_status(1, "has teken a fork", philo);
@@ -62,18 +60,19 @@ int	check_eat(t_philo *philo, int philo_size)
 	return (0);
 }
 
-void	check_kill(t_philo *philo, int philo_size, t_philo *philo_head)
+void	check_kill(t_philo *philo_head, int philo_size, t_philo *philo)
 {
 	while (1)
 	{
-		if ((get_time() - philo->last_meal) >= philo->time_to_die)
+		if ((get_time() - philo->last_meal) > philo->time_to_die)
 		{
-			*(philo->check) = 1;
+			usleep(100);
 			print_status(0, "is died", philo);
 			break ;
 		}
 		if ((philo->number_of_meals > 0) && check_eat(philo_head, philo_size))
 			break ;
+		usleep(100);
 		philo = philo->next;
 	}
 }

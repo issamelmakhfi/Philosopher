@@ -51,8 +51,8 @@ unsigned long long int	ft_atoi(char *s)
 	return (num * sign);
 }
 
-t_philo	*ft_philo_new(int ac, char **av, \
-		pthread_mutex_t *mutex_print, int *check)
+t_philo	*init_data(int ac, char **av, \
+		pthread_mutex_t *mutex_print)
 {
 	t_philo	*philo;
 
@@ -65,7 +65,6 @@ t_philo	*ft_philo_new(int ac, char **av, \
 	philo->meals = 0;
 	philo->number_of_meals = 0;
 	philo->print = mutex_print;
-	philo->check = check;
 	philo->next = NULL;
 	if (ac == 6)
 		philo->number_of_meals = ft_atoi(av[5]);
