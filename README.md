@@ -9,3 +9,8 @@ A hungry philosopher may only eat if there are both chopsticks available.Otherwi
 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjSDRPnhNev_w76awiDG8rH8BO7QzsmsL04teM9snOuwSqU0C9n5Z2kfoZi-W1UaXUMp8m-Qsi4UJUAQ57hJm8ISm50sIPGBJ28Q4KecPeBs5-jim9AsxWPLNYMQbMASpToxTDUhlV5irNNDuElPuBWheRHNlRRHqcK9G8oNpyRxQjad0-w-Sw5XSm5/s351/dining_philosopher_problem.png" />
 </p>
 </div>
+
+## Acquired skills
+
+In this project I learned some new concepts in parallel computing.
+I learned the basics of threading a process and discovered memory sharing mechanisms between threads (mutexes) as well as between processes (semaphores).
