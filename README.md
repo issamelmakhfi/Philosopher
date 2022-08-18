@@ -14,3 +14,7 @@ A hungry philosopher may only eat if there are both chopsticks available.Otherwi
 
 In this project I learned some new concepts in parallel computing.
 I learned the basics of threading a process and discovered memory sharing mechanisms between threads (mutexes) as well as between processes (semaphores).
+
+## Resources
+
+* https://bit.ly/3cbYUAe
